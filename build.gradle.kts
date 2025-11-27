@@ -1,40 +1,40 @@
 plugins {
-    id("java")
-    id("io.freefair.lombok") version "9.1.0"
+	java
+	id("org.springframework.boot") version "4.0.0"
+	id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "com.project007"
-version = "1.0-SNAPSHOT"
+version = "0.0.1-SNAPSHOT"
+description = "Demo project for Spring Boot"
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom(configurations.annotationProcessor.get())
+	}
+}
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    // CDI (Weld SE)
-    implementation("org.jboss.weld.se:weld-se-core:6.0.3.Final")
-    // Opcional: Jandex (útil si haces scanning)
-    implementation("io.smallrye:jandex:3.2.3")
-    implementation("org.projectlombok:lombok:1.18.42")
-
-    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
-
-    // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
-    implementation("org.hibernate.orm:hibernate-core:7.2.0.CR3")
-
-
-    implementation("org.postgresql:postgresql:42.7.8")
-
-}
-sourceSets{
-    main{
-        output.setResourcesDir(file("${buildDir}/classes/java/main"))
-    }
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-webmvc")
+	compileOnly("org.projectlombok:lombok")
+	runtimeOnly("org.postgresql:postgresql")
+	annotationProcessor("org.projectlombok:lombok")
+	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.withType<Test> {
+	useJUnitPlatform()
 }
