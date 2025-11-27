@@ -52,3 +52,9 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+sourceSets{
+    main{
+        output.setResourcesDir(file("${buildDir}/classes/java/main"))
+    }
+}
