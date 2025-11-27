@@ -26,14 +26,27 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
-	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
 	implementation("org.springframework.boot:spring-boot-starter-web:4.0.0")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	
+
+
+	    // CDI (Weld SE)
+    implementation("org.jboss.weld.se:weld-se-core:6.0.3.Final")
+    // Opcional: Jandex (útil si haces scanning)
+    implementation("io.smallrye:jandex:3.2.3")
+    implementation("org.projectlombok:lombok:1.18.42")
+
+    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
+
+    // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+    implementation("org.hibernate.orm:hibernate-core:7.2.0.CR3")
+
+
+    implementation("org.postgresql:postgresql:42.7.8")
 }
 
 tasks.withType<Test> {
