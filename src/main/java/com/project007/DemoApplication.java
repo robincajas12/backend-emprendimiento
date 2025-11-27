@@ -13,6 +13,15 @@ public class DemoApplication {
 		//
 		 new SpringApplicationBuilder(DemoApplication.class)
                 .run(args);
+		try(SeContainer container = SeContainerInitializer.newInstance().initialize())
+        {
+          IUserService us =  container.select(IUserService.class).get();
+          us.create(User.builder().name("robin").build());
+          us.selectAll().forEach(System.out::println);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 	}
 	@GetMapping("/hello")
 	public String hello() {
