@@ -5,7 +5,14 @@
     <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.project007.db.User</class>
+        <class>com.project007.entity.Usuario</class>
+        <class>com.project007.entity.Evento</class>
+        <class>com.project007.entity.Ubicacion</class>
+        <class>com.project007.entity.TipoEntrada</class>
+        <class>com.project007.entity.Entrada</class>
+        <class>com.project007.entity.Pedido</class>
+        <class>com.project007.entity.Transaccion</class>
+        <class>com.project007.entity.Permiso</class>
 
         <!-- Opcional: Hibernate detecta entidades automáticamente -->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>

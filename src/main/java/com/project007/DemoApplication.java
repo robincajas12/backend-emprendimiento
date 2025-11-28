@@ -1,38 +1,31 @@
 package com.project007;
 
+import com.project007.config.CdiContainerManager;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.project007.db.IUserService;
-import com.project007.db.User;
-
-import jakarta.enterprise.inject.se.SeContainer;
-import jakarta.enterprise.inject.se.SeContainerInitializer;
 
 @SpringBootApplication
-@RestController
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		//
-		 new SpringApplicationBuilder(DemoApplication.class)
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(DemoApplication.class)
                 .run(args);
-		try(SeContainer container = SeContainerInitializer.newInstance().initialize())
-        {
-          IUserService us =  container.select(IUserService.class).get();
-          us.create(User.builder().name("robin").build());
-          us.selectAll().forEach(System.out::println);
-		  
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-	}
-	@GetMapping("/hello")
-	public String hello() {
-		return "Hello, World!";
-	}
+    }
 
+    @PostConstruct
+    public void onStart() {
+        System.out.println("Inicializando Contenedor CDI...");
+        CdiContainerManager.initialize();
+        System.out.println("Contenedor CDI inicializado.");
+    }
+
+    @PreDestroy
+    public void onExit() {
+        System.out.println("Cerrando Contenedor CDI...");
+        CdiContainerManager.shutdown();
+        System.out.println("Contenedor CDI cerrado.");
+    }
 }
+
