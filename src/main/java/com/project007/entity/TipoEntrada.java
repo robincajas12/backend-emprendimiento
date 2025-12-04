@@ -6,6 +6,8 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+//para el ejemplo
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tipos_entrada")
@@ -41,5 +43,6 @@ public class TipoEntrada {
     @OneToMany(mappedBy = "tipoEntrada")
     @ToString.Exclude
     @Builder.Default
+    @JsonIgnore
     private List<Entrada> entradas = new ArrayList<>();
 }

@@ -2,8 +2,8 @@ package com.project007.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "entradas")
@@ -25,13 +25,15 @@ public class Entrada {
 
     @ManyToOne
     @JoinColumn(name = "asistente_id", nullable = false)
+    @JsonIgnore
     private Usuario asistente;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id", nullable = false)
+    @JsonIgnore
     private Pedido pedido;
 
-    @Column(name = "codigo_qr_unico", nullable = false, unique = true)
+    @Column(name = "codigo_qr_unico", nullable = false, unique = true, length = 1000)
     private String codigoQrUnico;
 
     @Enumerated(EnumType.STRING)

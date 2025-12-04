@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuarios")
 @Getter
@@ -48,16 +50,22 @@ public class Usuario {
     @OneToMany(mappedBy = "organizador")
     @ToString.Exclude
     @Builder.Default
+    
+    @JsonIgnore
     private List<Evento> eventosOrganizados = new ArrayList<>();
 
     @OneToMany(mappedBy = "asistente")
     @ToString.Exclude
     @Builder.Default
+
+    @JsonIgnore
     private List<Entrada> entradasCompradas = new ArrayList<>();
     
     @OneToMany(mappedBy = "asistente")
     @ToString.Exclude
     @Builder.Default
+
+    @JsonIgnore
     private List<Pedido> pedidos = new ArrayList<>();
 
     @PrePersist

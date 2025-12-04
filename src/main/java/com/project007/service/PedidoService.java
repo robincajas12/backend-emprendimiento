@@ -16,6 +16,9 @@ public class PedidoService implements IPedidoService {
     @Inject
     private EntityManager em;
 
+    @Inject
+    private JwtService jwtService; //para obtener el JWT id
+
     @Override
     public Pedido crearPedido(Usuario asistente, List<TipoEntrada> items) {
         try {
@@ -60,6 +63,15 @@ public class PedidoService implements IPedidoService {
                     .estado(Entrada.EstadoEntrada.VALIDA)
                     .build();
                 em.persist(nuevaEntrada);
+
+                //forzar la sincronización con la BD para el ID
+                em.flush(); 
+                //generamos el JWT
+                String tokenJwt = jwtService.generarTokenEntrada(nuevaEntrada);
+                //actualizamos con el JWT
+                nuevaEntrada.setCodigoQrUnico(tokenJwt);
+                em.merge(nuevaEntrada);
+
                 pedido.getEntradas().add(nuevaEntrada); // <<-- AÑADIDA ESTA LÍNEA PARA MANTENER LA CONSISTENCIA EN MEMORIA
             }
 
